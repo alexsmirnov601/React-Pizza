@@ -30,8 +30,8 @@ const Sort = () => {
         <b>Сортировка по:</b>
         <span onClick={() => setOpen(!open)}>{sortName}</span>
       </div>
-      <div className="sort__popup">
-        {open && (
+      {open && (
+        <div className="sort__popup">
           <ul>
             {list.map((item, index) => (
               <li
@@ -43,8 +43,8 @@ const Sort = () => {
               </li>
             ))}
           </ul>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
