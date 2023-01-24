@@ -1,28 +1,31 @@
 import React from 'react'
+import { SearchContext } from '../App'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCategoryId } from '../redux/slices/filterSlice.js'
 
 import Categories from '../components/Categories'
 import Sort from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../Pagination/Pagination'
-import { SearchContext } from '../App'
 
 const Home = () => {
+  const dispatch = useDispatch()
+  const { categoryId, sort } = useSelector((state) => state.filter)
+
+  const onClickCategory = (i) => {
+    dispatch(setCategoryId(i))
+  }
+
   const { searchValue } = React.useContext(SearchContext)
   const [items, setItems] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
-  const [categoryId, setCategoryID] = React.useState(0)
-  const [currentPage, setCurrentPage] = React.useState(0)
+  const [currentPage, setCurrentPage] = React.useState(1)
 
-  const [sortType, setSortType] = React.useState({
-    name: 'популярности',
-    sort: 'rating',
-  })
-
-  const category = categoryId > 0 ? `category=${categoryId}` : ''
+  const category = categoryId > 0 ? `&category=${categoryId}` : ''
   const search = searchValue ? `&q=${searchValue}` : ''
-  const sortBy = sortType.sort.replace('-', '')
-  const order = sortType.sort.includes('-') ? 'asc' : 'desc'
+  const sortBy = sort.sortProperty.replace('-', '')
+  const order = sort.sortProperty.includes('-') ? 'asc' : 'desc'
 
   React.useEffect(() => {
     setIsLoading(true)
@@ -35,7 +38,7 @@ const Home = () => {
         setIsLoading(false)
       })
     window.scroll(0, 0)
-  }, [categoryId, sortType, searchValue, currentPage])
+  }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
   const skeletons = [...new Array(10)].map((_, i) => <Skeleton key={i} />)
   const pizzas = items.map((item) => <PizzaBlock key={item.id} {...item} />)
@@ -43,11 +46,8 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          value={categoryId}
-          onClickCategory={(i) => setCategoryID(i)}
-        />
-        <Sort value={sortType} onClickSort={(obj) => setSortType(obj)} />
+        <Categories value={categoryId} onClickCategory={onClickCategory} />
+        <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
@@ -57,3 +57,7 @@ const Home = () => {
 }
 
 export default Home
+
+{
+  /* <Sort value={sortType} onClickSort={(obj) => setSortType(obj)} */
+}
