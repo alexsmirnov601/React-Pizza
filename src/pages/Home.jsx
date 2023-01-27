@@ -79,6 +79,7 @@ const Home = () => {
           sort,
         })
       )
+
       isSearch.current = true
     }
   }, [])
