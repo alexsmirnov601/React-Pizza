@@ -1,6 +1,5 @@
 import React from 'react'
 import qs from 'qs'
-import { SearchContext } from '../App'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   setCategoryId,
