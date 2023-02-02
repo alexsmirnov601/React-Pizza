@@ -1,6 +1,6 @@
 import React from 'react'
 import qs from 'qs'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import {
   setCategoryId,
   setCurrentPage,
@@ -8,19 +8,22 @@ import {
 } from '../redux/slices/filterSlice.js'
 import {
   fetchPizzas,
+  SearchPizzaParams,
   selectFilter,
   selectPizzaData,
 } from '../redux/slices/pizzasSlice'
+
 import { useNavigate } from 'react-router-dom'
 import Categories from '../components/Categories'
 import Sort, { list } from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../Pagination/Pagination'
+import { useAppDispatch } from '../redux/store.js'
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const isSearch = React.useRef(false)
   const isMounted = React.useRef(false)
 
@@ -29,12 +32,12 @@ const Home = () => {
 
   const { items, status } = useSelector(selectPizzaData)
 
-  const onClickCategory = (i) => {
+  const onClickCategory = (i: number) => {
     dispatch(setCategoryId(i))
   }
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number))
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page))
   }
 
   const getPizzas = async () => {
@@ -45,11 +48,11 @@ const Home = () => {
 
     dispatch(
       fetchPizzas({
+        sortBy,
         order,
         search,
-        sortBy,
         category,
-        currentPage,
+        currentPage: String(currentPage),
       })
     )
 
@@ -73,16 +76,32 @@ const Home = () => {
   /* Если был первый рендер, то проверяем URL - параметры и сохраняем в Redux */
   React.useEffect(() => {
     if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1))
+      const params = qs.parse(
+        window.location.search.substring(1) as unknown as SearchPizzaParams
+      )
 
-      const sort = list.find((obj) => obj.sortProperty === params.sortProperty)
+      const sort = list.find((obj) => obj.sortProperty === params.sortBy)
+
+      // if (sort) {
+      //   params.sortBy = sort
+      // }
 
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          searchValue: String(params.search),
+          categoryId: Number(params.cateogory),
+          currentPage: Number(params.currentPage),
+          sort: sort || list[0],
         })
       )
+
+      /* было так и проверки с if не было */
+      // dispatch(
+      //   setFilters({
+      //     ...params,
+      //     sort,
+      //   })
+      // )
 
       isSearch.current = true
     }
@@ -93,13 +112,15 @@ const Home = () => {
     window.scroll(0, 0)
 
     if (!isSearch.current) {
-      getPizzas()
+      /* нужно обернуть в dipatch? */ getPizzas()
     }
     isSearch.current = false
   }, [categoryId, sort.sortProperty, searchValue, currentPage])
 
   const skeletons = [...new Array(10)].map((_, i) => <Skeleton key={i} />)
-  const pizzas = items.map((item) => <PizzaBlock key={item.id} {...item} />)
+  const pizzas = items.map((item: any) => (
+    <PizzaBlock key={item.id} {...item} />
+  ))
 
   return (
     <div className="container">
