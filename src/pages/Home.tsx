@@ -5,7 +5,7 @@ import {
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from '../redux/slices/filterSlice.js'
+} from '../redux/slices/filterSlice'
 import {
   fetchPizzas,
   SearchPizzaParams,
@@ -13,13 +13,13 @@ import {
   selectPizzaData,
 } from '../redux/slices/pizzasSlice'
 
+import { useAppDispatch } from '../redux/store'
 import { useNavigate } from 'react-router-dom'
 import Categories from '../components/Categories'
 import Sort, { list } from '../components/Sort'
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock'
 import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../Pagination/Pagination'
-import { useAppDispatch } from '../redux/store.js'
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
@@ -32,9 +32,9 @@ const Home: React.FC = () => {
 
   const { items, status } = useSelector(selectPizzaData)
 
-  const onClickCategory = (i: number) => {
+  const onClickCategory = React.useCallback((i: number) => {
     dispatch(setCategoryId(i))
-  }
+  }, [])
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page))
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} onClickCategory={onClickCategory} />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (

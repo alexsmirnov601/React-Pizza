@@ -14,24 +14,25 @@ const categories = [
   'Закрытые',
 ]
 
-const Categories: React.FC<CategoriesProps> = ({ value, onClickCategory }) => {
-  return (
-    <div className="categories">
-      <ul>
-        {categories.map((item, i) => {
-          return (
-            <li
-              key={item}
-              className={value === i ? 'active' : ''}
-              onClick={() => onClickCategory(i)}
-            >
-              {item}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
-}
-
+const Categories: React.FC<CategoriesProps> = React.memo(
+  ({ value, onClickCategory }) => {
+    return (
+      <div className="categories">
+        <ul>
+          {categories.map((item, i) => {
+            return (
+              <li
+                key={item}
+                className={value === i ? 'active' : ''}
+                onClick={() => onClickCategory(i)}
+              >
+                {item}
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
+)
 export default Categories

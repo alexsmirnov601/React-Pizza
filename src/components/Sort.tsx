@@ -13,6 +13,10 @@ type ListType = {
   sortProperty: SortPropertyEnum
 }
 
+type SortPoppupProps = {
+  value: Sort
+}
+
 export const list: ListType[] = [
   { name: 'популярности (DESC)', sortProperty: SortPropertyEnum.RATING_DESC },
   { name: 'популярности (ASC)', sortProperty: SortPropertyEnum.RATING_ASC },
@@ -22,7 +26,7 @@ export const list: ListType[] = [
   { name: 'алфавиту (ASC)', sortProperty: SortPropertyEnum.TITILE_ASC },
 ]
 
-const SortPopup = () => {
+const SortPopup: React.FC<SortPoppupProps> = React.memo(({ value }) => {
   const sort = useSelector(selectSort)
   const dispatch = useDispatch()
 
@@ -62,7 +66,7 @@ const SortPopup = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{sort.name}</span>
+        <span onClick={() => setOpen(!open)}>{value.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -71,7 +75,7 @@ const SortPopup = () => {
               <li
                 onClick={() => onClickListItem(obj)}
                 className={
-                  sort.sortProperty === obj.sortProperty ? 'active' : ''
+                  value.sortProperty === obj.sortProperty ? 'active' : ''
                 }
                 key={obj.name}
               >
@@ -83,6 +87,6 @@ const SortPopup = () => {
       )}
     </div>
   )
-}
+})
 
 export default SortPopup

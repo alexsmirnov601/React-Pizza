@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import { CartItem } from './cartSlice'
 import { RootState } from '../store'
-import { Sort } from './filterSlice'
 
 // type FetchPizzasArgs = {
 //   order: string
