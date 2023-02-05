@@ -1,11 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  selectSort,
-  setSort,
-  Sort,
-  SortPropertyEnum,
-} from '../redux/slices/filterSlice'
+import { selectSort } from '../redux/filter/selectors'
+import { setSort } from '../redux/filter/slice'
+import { Sort, SortPropertyEnum } from '../redux/filter/types'
 
 /* тип для list */
 type ListType = {
