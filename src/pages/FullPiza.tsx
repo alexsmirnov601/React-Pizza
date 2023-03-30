@@ -15,7 +15,9 @@ const FullPiza: React.FC = () => {
   React.useEffect(() => {
     async function fetchPizza() {
       try {
-        const { data } = await axios.get('http://localhost:3001/items/' + id)
+        const { data } = await axios.get(
+          'https://pizza-server-da75.onrender.com/items' + id
+        )
         setPizza(data)
       } catch (error) {
         alert('Ошибка при получении пиццы')

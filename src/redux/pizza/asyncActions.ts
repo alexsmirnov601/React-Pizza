@@ -17,7 +17,7 @@ export const fetchPizzas = createAsyncThunk<Pizza[], SearchPizzaParams>(
   async (params) => {
     const { order, search, sortBy, category, currentPage } = params
     const { data } = await axios.get<Pizza[]>(
-      `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`
+      `https://pizza-server-da75.onrender.com/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`
     )
     return data
   }

@@ -79,10 +79,6 @@ const Home: React.FC = () => {
 
       const sort = list.find((obj) => obj.sortProperty === params.sortBy)
 
-      // if (sort) {
-      //   params.sortBy = sort
-      // }
-
       dispatch(
         setFilters({
           searchValue: String(params.search),
@@ -91,14 +87,6 @@ const Home: React.FC = () => {
           sort: sort || list[0],
         })
       )
-
-      /* было так и проверки с if не было */
-      // dispatch(
-      //   setFilters({
-      //     ...params,
-      //     sort,
-      //   })
-      // )
 
       isSearch.current = true
     }
