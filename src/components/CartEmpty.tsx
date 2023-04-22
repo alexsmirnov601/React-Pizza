@@ -4,7 +4,7 @@ import cartEmptyImg from '../assets/img/empty-cart.png'
 
 const CartEmpty: React.FC = () => (
   <div className="cart cart--empty">
-    <h2>Корзина пустая 😕</h2>
+    <h2>Корзина пустая😕</h2>
     <p>
       Вероятней всего, вы не заказывали ещё пиццу.
       <br />

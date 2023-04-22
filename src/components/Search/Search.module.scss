@@ -38,3 +38,14 @@
     opacity: 0.8;
   }
 }
+
+@media screen and (max-width: 1080px) {
+  .input {
+    width: 330px;
+  }
+}
+@media screen and (max-width: 750px) {
+  .root {
+    margin-top: 20px;
+  }
+}

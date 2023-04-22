@@ -51,6 +51,7 @@ const CartItemBlock: React.FC<CartItemProps> = ({
           {type}, {size} см.
         </p>
       </div>
+      {/* <div className="cart__item-wrapper"> */}
       <div className="cart__item-count">
         <button
           disabled={count === 1}
@@ -108,7 +109,7 @@ const CartItemBlock: React.FC<CartItemProps> = ({
       <div className="cart__item-remove">
         <div
           onClick={onClickRemove}
-          className="button button--outline button--circle"
+          className="button button--outline button--circle button--note"
         >
           <svg
             width="10"
@@ -127,6 +128,7 @@ const CartItemBlock: React.FC<CartItemProps> = ({
             ></path>
           </svg>
         </div>
+        {/* удалить */}
       </div>
     </div>
   )

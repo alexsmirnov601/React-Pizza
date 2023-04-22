@@ -9,7 +9,7 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: 645px) {
+    @media (max-width: 750px) {
       flex-direction: column;
 
       .header__cart {
@@ -36,5 +36,11 @@
     p {
       color: #7b7b7b;
     }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header {
+    padding-bottom: 5px;
   }
 }
