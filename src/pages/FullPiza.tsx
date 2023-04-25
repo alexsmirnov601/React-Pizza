@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useNavigate, useParams } from 'react-router-dom'
+import styles from './FullPizza.module.scss'
 
 const FullPiza: React.FC = () => {
   const [pizza, setPizza] = React.useState<{
@@ -16,7 +17,7 @@ const FullPiza: React.FC = () => {
     async function fetchPizza() {
       try {
         const { data } = await axios.get(
-          'https://pizza-server-da75.onrender.com/items' + id
+          'https://pizza-server-da75.onrender.com/items/' + id
         )
         setPizza(data)
       } catch (error) {
@@ -33,7 +34,7 @@ const FullPiza: React.FC = () => {
 
   return (
     <div className="container">
-      <img src={pizza.imageUrl} alt="pizza" />
+      <img className={styles.singlePizza} src={pizza.imageUrl} alt="pizza" />
       <h2>{pizza.title}</h2>
       <h4>{pizza.price}</h4>
       <Link to="/">
